@@ -1,0 +1,27 @@
+services:
+  drupal:
+    image: drupal:8-apache
+    ports:
+     - 8080:80
+    volumes:
+      - /var/www/html/modules
+      - /var/www/html/profiles  
+      - /var/www/html/themes
+      - /var/www/html/sites
+    restart: always
+    networks:
+      - devops
+
+  postgres:
+    image: postgres:10
+    environment:
+      postgres_DB: drupal
+      POSTGRES_USER: drupaluser
+      POSTGRES_PASSWORD: drupalpass
+    restart: always
+    networks:
+      - devops
+networks:
+  devops:
+    driver: bridge
+
